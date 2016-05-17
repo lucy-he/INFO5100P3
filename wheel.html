@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Richard Quan (NetID: rq32)</title>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<style>
+    *.unselectable {
+       -moz-user-select: -moz-none;
+       -khtml-user-select: none;
+       -webkit-user-select: none;
+
+       /*
+         Introduced in IE 10.
+         See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+       */
+       -ms-user-select: none;
+       user-select: none;
+    }
+    text{
+        font-family:Helvetica, Arial, sans-serif;
+        font-size:11px;
+        pointer-events:none;
+    }
+    #chart{
+        position:absolute;
+        width:500px;
+        height:500px;
+        top:0;
+        left:0;
+    }
+    #question{
+        position: absolute;
+        width:400px;
+        height:500px;
+        top:0;
+        left:520px;
+    }
+    #question h1{
+        font-size: 50px;
+        font-weight: bold;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        position: absolute;
+        padding: 0;
+        margin: 0;
+        top:50%;
+        -webkit-transform:translate(0,-50%);
+                transform:translate(0,-50%);
+    }
+	</style>
+</head>
+<body>
+<div id="chart"></div>
+<div id="question"><h1></h1></div>
+<script>
+    var padding = {top:20, right:40, bottom:0, left:0},
+        w = 500 - padding.left - padding.right,
+        h = 500 - padding.top  - padding.bottom,
+        r = Math.min(w, h)/2,
+        rotation = 0,
+        oldrotation = 0,
+        picked = 0,
+        color = d3.scale.category20();
+
+    var data = [
+                {"label":"Question 1",  "value":1,  "question":"What CSS property is used for specifying the area between the content and its border?"}, // padding
+                {"label":"Question 2",  "value":1,  "question":"What CSS property is used for changing the font?"}, //font-family
+                {"label":"Question 3",  "value":2,  "question":"What CSS property is used for changing the color of text?"} //color
+    ];
+
+    var sliceArr = [];
+    for(var i = 0; i < data.length; i++){
+        for(var j = 0; j < data[i].value; j++){
+            sliceArr.unshift(data[i].label);
+        }
+    }
+
+
+    var svg = d3.select('#chart')
+        .append("svg")
+        .data([data])
+        .attr("width",  w + padding.left + padding.right)
+        .attr("height", h + padding.top + padding.bottom);
+
+    var container = svg.append("g")
+        .attr("class", "chartholder")
+        .attr("transform", "translate(" + (w/2 + padding.left) + "," + (h/2 + padding.top) + ")");
+
+    var vis = container
+        .append("g");
+        
+    var pie = d3.layout.pie().sort(null).value(function(d){return d.value;});
+
+    // declare an arc generator function
+    var arc = d3.svg.arc().outerRadius(r);
+
+    // select paths, use arc generator to draw
+    var arcs = vis.selectAll("g.slice")
+        .data(pie)
+        .enter()
+        .append("g")
+        .attr("class", "slice");
+        
+
+    arcs.append("path")
+        .attr("fill", function(d, i){ return color(i); })
+        .attr("d", function (d) { return arc(d); });
+
+    // add the text
+    arcs.append("text").attr("transform", function(d){
+            d.innerRadius = 0;
+            d.outerRadius = r;
+            d.angle = (d.startAngle + d.endAngle)/2;
+            return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")translate(" + (d.outerRadius -10) +")";
+        })
+        .attr("text-anchor", "end")
+        .attr("class","unselectable")
+        .text( function(d, i) {
+            return data[i].label;
+        });
+
+
+
+    function spin(d){
+
+        rotation = Math.floor(Math.random()*360)+360;
+            
+        //TODO: click rightmost slice
+        newAng = 360-(rotation%360);
+        picked = Math.floor((newAng/360)*sliceArr.length);
+        console.log(picked+1);
+        
+        vis.transition()
+            .duration(3000)
+            .attrTween("transform", rotTween)
+            .each("end", function(){
+                oldrotation = rotation;
+                //populate question TODO
+                d3.select("#question h1")
+                    .text(sliceArr[picked]);
+            });
+    }
+
+    //make arrow
+    svg.append("g")
+        .attr("transform", "translate(" + (w/2 + padding.left) + "," + 0 + ") rotate(270) ")
+        .append("path")
+        .attr("d", "M-" + (r*.15) + ",0L0," + (r*.05) + "L0,-" + (r*.05) + "Z")
+        .style({"fill":"black"});
+
+    //draw spin circle
+    var spinButt = container.append("circle")
+        .attr("cx", 0)
+        .attr("cy", 0)
+        .attr("r", 60)
+        .style({"fill":"white","cursor":"pointer"});
+    spinButt.on("click", spin); //TODO: FIX THE DRAG AFTER A SPIN
+
+    //spin text
+    var spinText = svg.append("text")
+        .attr("x", w/2 + padding.left)
+        .attr("y", h/2 + padding.top)
+        .attr("text-anchor", "middle")
+        .text("SPIN")
+        .attr("class","unselectable")
+        .style({"font-weight":"bold", "font-size":"30px"});
+    
+    
+    function rotTween(to) {
+      var i = d3.interpolate(oldrotation % 360, rotation);
+      return function(t) {
+        return "rotate(" + i(t) + ")";
+      };
+    }
+
+    var isDown = false;
+    var lastX = w / 2;
+    var lastY = h / 2;
+    var curAngle = 0;
+    var finishAngle = 0;
+    var angleDeg = 0;
+    
+    function dragInit(x,y){
+        isDown = true;
+        curAngle = Math.atan2(y, x);
+        if (curAngle < 0) {
+            curAngle += 2 * Math.PI;
+        }
+        curAngle = curAngle * 180 / Math.PI;
+    }
+    function dragCalc(x,y){
+        if (isDown) {
+            angleDeg = Math.atan2(y, x);
+            if (angleDeg < 0) angleDeg += 2 * Math.PI;
+            angleDeg = angleDeg * 180 / Math.PI;
+            angleDeg = angleDeg - curAngle + finishAngle;
+            if (angleDeg < 0) angleDeg += 360; 
+            container.attr("transform", "translate(" + (w / 2 + padding.left) + "," + (h / 2 + padding.top) + ") rotate(" + angleDeg + "," + 0 + "," + 0 + ")");
+            console.log(angleDeg);
+
+            //populate question TODO
+            picked = Math.floor((angleDeg/360)*sliceArr.length);
+            d3.select("#question h1")
+                .text(sliceArr[picked]);
+        }
+    }
+    function dragEnd(){
+        finishAngle = angleDeg;
+        isDown = false;
+    }
+
+    container.on("mousedown", function(d) {
+        var thisX = lastX - d3.event.x;
+        var thisY = lastY - d3.event.y;
+        dragInit(thisX, thisY);
+    });
+    container.on("mousemove", function(d) {
+        console.log(d3.event.x+','+d3.event.y);
+        var thisX = lastX - d3.event.x;
+        var thisY = lastY - d3.event.y;
+        dragCalc(thisX, thisY);
+    });
+    container.on("mouseup", function(d) {
+        dragEnd();
+    });
+
+    container.on("touchstart", function(d) {
+        //console.log("touchstart");
+        var thisX = lastX - parseInt(d3.event.touches[0].clientX);
+        var thisY = lastY - parseInt(d3.event.touches[0].clientY);
+        dragInit(thisX, thisY);
+    });
+    container.on("touchmove", function(d) {
+        //console.log(d3.event.touches[0].clientX+','+d3.event.touches[0].clientY);
+        var thisX = lastX - parseInt(d3.event.touches[0].clientX);
+        var thisY = lastY - parseInt(d3.event.touches[0].clientY);
+        dragCalc(thisX, thisY);
+    });
+    container.on("touchend", function(d) {
+        dragEnd();
+    });
+
+</script>
+</body>
+</html>
