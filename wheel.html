@@ -124,12 +124,13 @@
     function spin(d){
 
         rotation = Math.floor(Math.random()*360)+360;
-            
-        //TODO: click rightmost slice
-        newAng = 360-(rotation%360);
-        picked = Math.floor((newAng/360)*sliceArr.length);
-        console.log(picked+1);
+        console.log("rot "+rotation);
         
+        //TODO: click rightmost slice
+        newAng = (angleDeg+rotation)%360;
+        picked = Math.floor((newAng/360)*sliceArr.length);
+        console.log("angDeg "+newAng);
+
         vis.transition()
             .duration(3000)
             .attrTween("transform", rotTween)
@@ -139,6 +140,9 @@
                 d3.select("#question h1")
                     .text(sliceArr[picked]);
             });
+        
+        finishAngle = newAng;
+        //console.log("finishAngle: "+finishAngle);
     }
 
     //make arrow
@@ -196,16 +200,17 @@
             angleDeg = angleDeg - curAngle + finishAngle;
             if (angleDeg < 0) angleDeg += 360; 
             container.attr("transform", "translate(" + (w / 2 + padding.left) + "," + (h / 2 + padding.top) + ") rotate(" + angleDeg + "," + 0 + "," + 0 + ")");
-            console.log(angleDeg);
+            //console.log(angleDeg);
 
             //populate question TODO
-            picked = Math.floor((angleDeg/360)*sliceArr.length);
+            picked = Math.floor(((angleDeg%360)/360)*sliceArr.length);
             d3.select("#question h1")
                 .text(sliceArr[picked]);
         }
     }
     function dragEnd(){
-        finishAngle = angleDeg;
+        finishAngle = angleDeg%360;
+        console.log("finishAngle: "+finishAngle);
         isDown = false;
     }
 
@@ -215,7 +220,7 @@
         dragInit(thisX, thisY);
     });
     container.on("mousemove", function(d) {
-        console.log(d3.event.x+','+d3.event.y);
+        //console.log(d3.event.x+','+d3.event.y);
         var thisX = lastX - d3.event.x;
         var thisY = lastY - d3.event.y;
         dragCalc(thisX, thisY);
