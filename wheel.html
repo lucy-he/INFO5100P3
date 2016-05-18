@@ -53,9 +53,11 @@
 <div id="chart"></div>
 <div id="question"><h1></h1></div>
 <script>
-    var padding = {top:20, right:40, bottom:0, left:0},
-        w = 500 - padding.left - padding.right,
-        h = 500 - padding.top  - padding.bottom,
+    var padding = {top:20, right:40, bottom:20, left:0},
+        w = parseInt(d3.select('#chart').style('width'), 10)
+  		, w = w - padding.left - padding.right,
+        h = parseInt(d3.select('#chart').style('height'), 10)
+  		,h = h - padding.top - padding.bottom,
         r = Math.min(w, h)/2,
         rotation = 0,
         oldrotation = 0,
@@ -79,8 +81,10 @@
     var svg = d3.select('#chart')
         .append("svg")
         .data([data])
-        .attr("width",  w + padding.left + padding.right)
-        .attr("height", h + padding.top + padding.bottom);
+        .attr("width",  '100%')
+        .attr("height",'100%')
+        .attr('viewBox','0 20 '+Math.min(w,h) +' '+Math.min(w,h) )
+        .attr('preserveAspectRatio','xMinYMin');
 
     var container = svg.append("g")
         .attr("class", "chartholder")
