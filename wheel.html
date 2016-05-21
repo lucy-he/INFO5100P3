@@ -65,258 +65,254 @@ var flu = [];
 
     d3.csv("DeathRecordsFinal.csv", function(deaths) {
 
-    deaths.forEach(function(d) {
-        if(d.Icd10Code[0] == "I" 
-            && (parseInt(d.Icd10Code.slice(1,3)) >= 1)
-            && (parseInt(d.Icd10Code.slice(1,3)) <= 52) 
-            ){
-            heartDis.push(d);
-        }
-        else if(d.Icd10Code[0] == "C" 
-            && (parseInt(d.Icd10Code.slice(1,3)) >= 0)
-            && (parseInt(d.Icd10Code.slice(1,3)) <= 97) 
-            ){
-            cancer.push(d);
-        }
-        else if(d.Icd10Code[0] == "J" 
-            && (parseInt(d.Icd10Code.slice(1,3)) >= 40)
-            && (parseInt(d.Icd10Code.slice(1,3)) <= 47) 
-            ){
-            respDis.push(d);
-        }
-        else if(d.Icd10Code[0] == "V" 
-            && (parseInt(d.Icd10Code.slice(1,3)) >= 1)
-            && (parseInt(d.Icd10Code.slice(1,3)) <= 59) 
-            ){
-            accident.push(d);
-        }
-        else if(d.Icd10Code[0] == "I" 
-            && (parseInt(d.Icd10Code.slice(1,3)) >= 60)
-            && (parseInt(d.Icd10Code.slice(1,3)) <= 69) 
-            ){
-            stroke.push(d);
-        }
-        else if(d.Icd10Code[0] == "G" 
-            && (parseInt(d.Icd10Code.slice(1,3)) == 30) 
-            ){
-            alzheimer.push(d);
-        }
-        else if(d.Icd10Code[0] == "E" 
-            && (parseInt(d.Icd10Code.slice(1,3)) >= 10)
-            && (parseInt(d.Icd10Code.slice(1,3)) <= 14) 
-            ){
-            diabetes.push(d);
-        }
-        else if(d.Icd10Code[0] == "J" 
-            && (parseInt(d.Icd10Code.slice(1,3)) >= 9)
-            && (parseInt(d.Icd10Code.slice(1,3)) <= 18) 
-            ){
-            flu.push(d);
-        }
-    });
-    
-    var data = [
-        {"label":"heart disease",  "value":heartDis.length},
-        {"label":"cancer",  "value":cancer.length},
-        {"label":"respiratory disease",  "value":respDis.length},
-        {"label":"accidents",  "value":accident.length},
-        {"label":"stroke",  "value":stroke.length},
-        {"label":"Alzheimer's disease",  "value":alzheimer.length},
-        {"label":"diabetes",  "value":diabetes.length},
-        {"label":"influenza and pneumonia",  "value":flu.length}
-    ];
-
-    
-    //populate slice array according to data
-    sliceArr = [];
-    for(var i = 0; i < data.length; i++){
-        for(var j = 0; j < data[i].value; j++){
-            sliceArr.push(data[i].label);
-        }
-    }
-    sliceArr.reverse();
-    
-
-    var padding = {top:20, right:40, bottom:20, left:0},
-        w = parseInt(d3.select('#chart').style('width'), 10)
-  		, w = w - padding.left - padding.right,
-        h = parseInt(d3.select('#chart').style('height'), 10)
-  		,h = h - padding.top - padding.bottom,
-        r = Math.min(w, h)/2,
-        oldrotation = 0,
-        picked = 0,
-        color = d3.scale.category20();
-
-    var svg = d3.select('#chart')
-        .append("svg")
-        .data([data])
-        .attr("width",  '100%')
-        .attr("height",'100%')
-        .attr('viewBox','0 20 '+Math.min(w,h) +' '+Math.min(w,h) )
-        .attr('preserveAspectRatio','xMinYMin');
-
-    var container = svg.append("g")
-        .attr("class", "chartholder")
-        .attr("transform", "translate(" + (w/2 + padding.left) + "," + (h/2 + padding.top) + ")");
-
-    var vis = container
-        .append("g");
-        
-    var pie = d3.layout.pie().sort(null).value(function(d){return d.value;});
-
-    // declare an arc generator function
-    var arc = d3.svg.arc().outerRadius(r);
-
-    // select paths, use arc generator to draw
-    var arcs = vis.selectAll("g.slice")
-        .data(pie)
-        .enter()
-        .append("g")
-        .attr("class", "slice");
-        
-
-    arcs.append("path")
-        .attr("fill", function(d, i){ return color(i); })
-        .attr("d", function (d) { return arc(d); });
-
-    // add the text
-    arcs.append("text").attr("transform", function(d){
-            d.innerRadius = 0;
-            d.outerRadius = r;
-            d.angle = (d.startAngle + d.endAngle)/2;
-            return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")translate(" + (d.outerRadius -10) +")";
-        })
-        .attr("text-anchor", "end")
-        .attr("class","unselectable")
-        .text( function(d, i) {
-            return data[i].label;
+        deaths.forEach(function(d) {
+            if(d.Icd10Code[0] == "I" 
+                && (parseInt(d.Icd10Code.slice(1,3)) >= 1)
+                && (parseInt(d.Icd10Code.slice(1,3)) <= 52) 
+                ){
+                heartDis.push(d);
+            }
+            else if(d.Icd10Code[0] == "C" 
+                && (parseInt(d.Icd10Code.slice(1,3)) >= 0)
+                && (parseInt(d.Icd10Code.slice(1,3)) <= 97) 
+                ){
+                cancer.push(d);
+            }
+            else if(d.Icd10Code[0] == "J" 
+                && (parseInt(d.Icd10Code.slice(1,3)) >= 40)
+                && (parseInt(d.Icd10Code.slice(1,3)) <= 47) 
+                ){
+                respDis.push(d);
+            }
+            else if(d.Icd10Code[0] == "V" 
+                && (parseInt(d.Icd10Code.slice(1,3)) >= 1)
+                && (parseInt(d.Icd10Code.slice(1,3)) <= 59) 
+                ){
+                accident.push(d);
+            }
+            else if(d.Icd10Code[0] == "I" 
+                && (parseInt(d.Icd10Code.slice(1,3)) >= 60)
+                && (parseInt(d.Icd10Code.slice(1,3)) <= 69) 
+                ){
+                stroke.push(d);
+            }
+            else if(d.Icd10Code[0] == "G" 
+                && (parseInt(d.Icd10Code.slice(1,3)) == 30) 
+                ){
+                alzheimer.push(d);
+            }
+            else if(d.Icd10Code[0] == "E" 
+                && (parseInt(d.Icd10Code.slice(1,3)) >= 10)
+                && (parseInt(d.Icd10Code.slice(1,3)) <= 14) 
+                ){
+                diabetes.push(d);
+            }
+            else if(d.Icd10Code[0] == "J" 
+                && (parseInt(d.Icd10Code.slice(1,3)) >= 9)
+                && (parseInt(d.Icd10Code.slice(1,3)) <= 18) 
+                ){
+                flu.push(d);
+            }
         });
+        
+        var data = [
+            {"label":"heart disease",  "value":heartDis.length},
+            {"label":"cancer",  "value":cancer.length},
+            {"label":"respiratory disease",  "value":respDis.length},
+            {"label":"accidents",  "value":accident.length},
+            {"label":"stroke",  "value":stroke.length},
+            {"label":"Alzheimer's disease",  "value":alzheimer.length},
+            {"label":"diabetes",  "value":diabetes.length},
+            {"label":"influenza and pneumonia",  "value":flu.length}
+        ];
 
-
-    //make arrow
-    svg.append("g")
-        .attr("transform", "translate(" + (w/2 + padding.left) + "," + 0 + ") rotate(270) ")
-        .append("path")
-        .attr("d", "M-" + (r*.15) + ",0L0," + (r*.05) + "L0,-" + (r*.05) + "Z")
-        .style({"fill":"black"});
-    
-
-    var isDown = false;
-    var lastX = w / 2;
-    var lastY = h / 2;
-    var curAngle = 0;
-    var finishAngle = 0;
-    var angleDeg = 0;
-    
-    function dragInit(x,y){
-        console.log("dragInit");
-        isDown = true;
-        curAngle = Math.atan2(y, x);
-        if (curAngle < 0) {
-            curAngle += 2 * Math.PI;
+        
+        //populate slice array according to data
+        sliceArr = [];
+        for(var i = 0; i < data.length; i++){
+            for(var j = 0; j < data[i].value; j++){
+                sliceArr.push(data[i].label);
+            }
         }
-        curAngle = curAngle * 180 / Math.PI;
-    }
-    function dragCalc(x,y){
-        if (isDown) {
-            console.log("dragCalc");
-            angleDeg = Math.atan2(y, x);
-            if (angleDeg < 0) angleDeg += 2 * Math.PI;
-            angleDeg = angleDeg * 180 / Math.PI;
-            angleDeg = angleDeg - curAngle + finishAngle;
-            if (angleDeg < 0) angleDeg += 360; 
+        sliceArr.reverse();
+        
+
+        var padding = {top:20, right:40, bottom:20, left:0},
+            w = parseInt(d3.select('#chart').style('width'), 10)
+      		, w = w - padding.left - padding.right,
+            h = parseInt(d3.select('#chart').style('height'), 10)
+      		,h = h - padding.top - padding.bottom,
+            r = Math.min(w, h)/2,
+            picked = 0,
+            color = d3.scale.category20();
+
+        var svg = d3.select('#chart')
+            .append("svg")
+            .data([data])
+            .attr("width",  '100%')
+            .attr("height",'100%')
+            .attr('viewBox','0 20 '+Math.min(w,h) +' '+Math.min(w,h) )
+            .attr('preserveAspectRatio','xMinYMin');
+
+        var container = svg.append("g")
+            .attr("class", "chartholder")
+            .attr("transform", "translate(" + (w/2 + padding.left) + "," + (h/2 + padding.top) + ")");
+
+        var vis = container
+            .append("g");
             
-            //spin image
-            container.attr("transform", "translate(" + (w / 2 + padding.left) + "," + (h / 2 + padding.top) + ") rotate(" + angleDeg + "," + 0 + "," + 0 + ")");
-            // console.log(angleDeg);
+        var pie = d3.layout.pie().sort(null).value(function(d){return d.value;});
 
-            //populate question TODO
-            picked = Math.floor(((angleDeg%360)/360)*sliceArr.length);
-            d3.select("#question h1")
-                .text(sliceArr[picked]);
+        // declare an arc generator function
+        var arc = d3.svg.arc().outerRadius(r);
+
+        // select paths, use arc generator to draw
+        var arcs = vis.selectAll("g.slice")
+            .data(pie)
+            .enter()
+            .append("g")
+            .attr("class", "slice");
+            
+
+        arcs.append("path")
+            .attr("fill", function(d, i){ return color(i); })
+            .attr("d", function (d) { return arc(d); });
+
+        // add the text
+        arcs.append("text").attr("transform", function(d){
+                d.innerRadius = 0;
+                d.outerRadius = r;
+                d.angle = (d.startAngle + d.endAngle)/2;
+                return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")translate(" + (d.outerRadius -10) +")";
+            })
+            .attr("text-anchor", "end")
+            .attr("class","unselectable")
+            .text( function(d, i) {
+                return data[i].label;
+            });
+
+
+        //make arrow
+        svg.append("g")
+            .attr("transform", "translate(" + (w/2 + padding.left) + "," + 0 + ") rotate(270) ")
+            .append("path")
+            .attr("d", "M-" + (r*.15) + ",0L0," + (r*.05) + "L0,-" + (r*.05) + "Z")
+            .style({"fill":"black"});
+        
+
+        var isDown = false;
+        var lastX = w / 2;
+        var lastY = h / 2;
+        var curAngle = 0;
+        var finishAngle = 0;
+        var angleDeg = 0;
+        
+        function dragInit(x,y){
+            console.log("dragInit");
+            isDown = true;
+            curAngle = Math.atan2(y, x);
+            if (curAngle < 0) {
+                curAngle += 2 * Math.PI;
+            }
+            curAngle = curAngle * 180 / Math.PI;
         }
-    }
-    function dragEnd(){
-        console.log("dragEnd");
-        finishAngle = angleDeg%360;
-        oldrotation = angleDeg%360;
-        // spin(); //TODO based on momentum
-        console.log(oldrotation);
-        console.log(finishAngle); //TODO: same variable!
-        isDown = false;
-    }
+        function dragCalc(x,y){
+            if (isDown) {
+                console.log("dragCalc");
+                angleDeg = Math.atan2(y, x);
+                if (angleDeg < 0) angleDeg += 2 * Math.PI;
+                angleDeg = angleDeg * 180 / Math.PI;
+                angleDeg = angleDeg - curAngle + finishAngle;
+                if (angleDeg < 0) angleDeg += 360; 
+                
+                //spin image
+                container.attr("transform", "translate(" + (w / 2 + padding.left) + "," + (h / 2 + padding.top) + ") rotate(" + angleDeg + "," + 0 + "," + 0 + ")");
+                // console.log(angleDeg);
 
-    container.on("mousedown", function(d) {
-        var thisX = lastX - d3.event.x;
-        var thisY = lastY - d3.event.y;
-        dragInit(thisX, thisY);
-    });
-    container.on("mousemove", function(d) {
-        var thisX = lastX - d3.event.x;
-        var thisY = lastY - d3.event.y;
-        dragCalc(thisX, thisY);
-    });
-    container.on("mouseup", function(d) {
-        dragEnd();
-    });
-
-    container.on("touchstart", function(d) {
-        var thisX = lastX - parseInt(d3.event.touches[0].clientX);
-        var thisY = lastY - parseInt(d3.event.touches[0].clientY);
-        dragInit(thisX, thisY);
-    });
-    container.on("touchmove", function(d) {
-        var thisX = lastX - parseInt(d3.event.touches[0].clientX);
-        var thisY = lastY - parseInt(d3.event.touches[0].clientY);
-        dragCalc(thisX, thisY);
-    });
-    container.on("touchend", function(d) {
-        dragEnd();
-    });
-
-    
-    //draw spin circle
-    var spinButt = container.append("circle")
-        .attr("cx", 0)
-        .attr("cy", 0)
-        .attr("r", 60)
-        .style({"fill":"white","cursor":"pointer"});
-    spinButt.on("click", spin); //TODO: FIX THE DRAG AFTER A SPIN
-
-    //spin text
-    var spinText = svg.append("text")
-        .attr("x", w/2 + padding.left)
-        .attr("y", h/2 + padding.top)
-        .attr("text-anchor", "middle")
-        .text("SPIN")
-        .attr("class","unselectable")
-        .style({"font-weight":"bold", "font-size":"30px"});
-
-    
-    var oldrotation = 0;
-    function spin(d){
-        angleDeg = Math.floor(Math.random()*360)+720;
-
-        container.transition().duration(3000)
-            //.attr("transform", "translate(" + (w / 2 + padding.left) + "," + (h / 2 + padding.top) + ") rotate(" + (angleDeg) + "," + 0 + "," + 0 + ")")
-            .attrTween("transform", rotTween)
-            .each("end", function(){
-                oldrotation = angleDeg; //doesn't work TODO BUG
                 //populate question TODO
-                picked = Math.floor((((angleDeg)%360)/360)*sliceArr.length);
+                picked = Math.floor(((angleDeg%360)/360)*sliceArr.length);
                 d3.select("#question h1")
                     .text(sliceArr[picked]);
-            });
-        finishAngle = (angleDeg)%360;
-    }
+            }
+        }
+        function dragEnd(){
+            console.log("dragEnd");
+            finishAngle = angleDeg%360;
+            // spin(); //TODO based on momentum
+            console.log(finishAngle); //TODO: same variable!
+            isDown = false;
+        }
 
-    function rotTween(to) {
-    var i = d3.interpolate(oldrotation % 360, (angleDeg));
-    return function(t) {
-        return "translate(" + (w / 2 + padding.left) + "," + (h / 2 + padding.top) + ") rotate(" + i(t) + ")";
-        };
-    }
-    
+        container.on("mousedown", function(d) {
+            var thisX = lastX - d3.event.x;
+            var thisY = lastY - d3.event.y;
+            dragInit(thisX, thisY);
+        });
+        container.on("mousemove", function(d) {
+            var thisX = lastX - d3.event.x;
+            var thisY = lastY - d3.event.y;
+            dragCalc(thisX, thisY);
+        });
+        container.on("mouseup", function(d) {
+            dragEnd();
+        });
+
+        container.on("touchstart", function(d) {
+            var thisX = lastX - parseInt(d3.event.touches[0].clientX);
+            var thisY = lastY - parseInt(d3.event.touches[0].clientY);
+            dragInit(thisX, thisY);
+        });
+        container.on("touchmove", function(d) {
+            var thisX = lastX - parseInt(d3.event.touches[0].clientX);
+            var thisY = lastY - parseInt(d3.event.touches[0].clientY);
+            dragCalc(thisX, thisY);
+        });
+        container.on("touchend", function(d) {
+            dragEnd();
+        });
+
+        
+        //draw spin circle
+        var spinButt = container.append("circle")
+            .attr("cx", 0)
+            .attr("cy", 0)
+            .attr("r", 60)
+            .style({"fill":"white","cursor":"pointer"});
+        spinButt.on("click", spin); //TODO: FIX THE DRAG AFTER A SPIN
+
+        //spin text
+        var spinText = svg.append("text")
+            .attr("x", w/2 + padding.left)
+            .attr("y", h/2 + padding.top)
+            .attr("text-anchor", "middle")
+            .text("SPIN")
+            .attr("class","unselectable")
+            .style({"font-weight":"bold", "font-size":"30px"});
+
+        
+        function spin(d){
+            angleDeg = Math.floor(Math.random()*360)+720;
+
+            container.transition().duration(3000)
+                //.attr("transform", "translate(" + (w / 2 + padding.left) + "," + (h / 2 + padding.top) + ") rotate(" + (angleDeg) + "," + 0 + "," + 0 + ")")
+                .attrTween("transform", rotTween)
+                .each("end", function(){
+                    finishAngle = angleDeg; //doesn't work TODO BUG
+                    //populate question TODO
+                    picked = Math.floor((((angleDeg)%360)/360)*sliceArr.length);
+                    d3.select("#question h1")
+                        .text(sliceArr[picked]);
+                });
+            finishAngle = (angleDeg)%360;
+        }
+
+        function rotTween(to) {
+        var i = d3.interpolate(finishAngle % 360, (angleDeg));
+        return function(t) {
+            return "translate(" + (w / 2 + padding.left) + "," + (h / 2 + padding.top) + ") rotate(" + i(t) + ")";
+            };
+        }
+        
     });
 </script>
 </body>
