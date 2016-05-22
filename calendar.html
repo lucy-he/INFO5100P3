@@ -388,7 +388,29 @@
 
         // month
 
-        var deathMonth = "January";
+        var deathCause;
+        var deathCauseData = accident;
+
+        var deathCauseMonthData = [0,0,0,0,0,0,0,0,0,0,0,0];
+
+        deathCauseData.forEach(function(d){
+            deathCauseMonthData[d.MonthOfDeath-1]++;
+        });
+
+        console.log(deathCauseMonthData);
+
+        var maxMonth = 0;
+        var maxMonthCount = 0;
+        for (var m = 0; m < deathCauseMonthData.length; m++) {
+            if (maxMonthCount < deathCauseMonthData[m]) {
+                maxMonthCount = deathCauseMonthData[m];
+                maxMonth = m;
+            }
+        }
+
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        var deathMonth = months[maxMonth];
 
         svgCal.append("text")
             .attr("x", calWidth/2)
