@@ -26,8 +26,6 @@
         position:absolute;
         width:500px;
         height:500px;
-        top:0;
-        left:0;
     }
     #question{
         position: absolute;
@@ -46,6 +44,9 @@
         top:50%;
         -webkit-transform:translate(0,-50%);
                 transform:translate(0,-50%);
+    }
+    .spin-button:focus, .spin-button:active{
+        outline: none !important;
     }
 	</style>
 </head>
@@ -217,18 +218,103 @@
             .attr("d", "M-" + (r*.15) + ",0L0," + (r*.05) + "L0,-" + (r*.05) + "Z")
             .style({"fill":"black"});
         
+        var heartDisSel = heartDis;
+        var cancerSel = cancer;
+        var respDisSel = respDis;
+        var accidentSel = accident;
+        var strokeSel = stroke;
+        var alzheimerSel = alzheimer;
+        var diabetesSel = diabetes;
+        var fluSel = flu;
 
-        change = function(num) {
-            data = [
-                {"label":"heart disease",  "value":num},
-                {"label":"cancer",  "value":1},
-                {"label":"respiratory disease",  "value":1},
-                {"label":"accidents",  "value":1},
-                {"label":"stroke",  "value":1},
-                {"label":"Alzheimer's disease",  "value":1},
-                {"label":"diabetes",  "value":1},
-                {"label":"influenza and pneumonia",  "value":1}
-            ];
+        //TODO: add attributes
+        change = function(sex) {
+
+            heartDisSel = [];
+            cancerSel = [];
+            respDisSel = [];
+            accidentSel = [];
+            strokeSel = [];
+            alzheimerSel = [];
+            diabetesSel = [];
+            fluSel = [];
+
+            data[0].value = 0;
+            data[1].value = 0;
+            data[2].value = 0;
+            data[3].value = 0;
+            data[4].value = 0;
+            data[5].value = 0;
+            data[6].value = 0;
+            data[7].value = 0;
+
+            heartDis.forEach(function(d) {
+                if(d.Sex == sex || sex == null) {
+                    data[0].value += 1;
+                    heartDisSel.push(d);
+                }
+            });
+            cancer.forEach(function(d) {
+                if(d.Sex == sex || sex == null) {
+                    data[1].value += 1;
+                    cancerSel.push(d);
+                }
+            });
+            respDis.forEach(function(d) {
+                if(d.Sex == sex || sex == null) {
+                    data[2].value += 1;
+                    respDisSel.push(d);
+                }
+            });
+            accident.forEach(function(d) {
+                if(d.Sex == sex || sex == null) {
+                    data[3].value += 1;
+                    accidentSel.push(d);
+                }
+            });
+            stroke.forEach(function(d) {
+                if(d.Sex == sex || sex == null) {
+                    data[4].value += 1;
+                    strokeSel.push(d);
+                }
+            });
+            alzheimer.forEach(function(d) {
+                if(d.Sex == sex || sex == null) {
+                    data[5].value += 1;
+                    alzheimerSel.push(d);
+                }
+            });
+            diabetes.forEach(function(d) {
+                if(d.Sex == sex || sex == null) {
+                    data[6].value += 1;
+                    diabetesSel.push(d);
+                }
+            });
+            flu.forEach(function(d) {
+                if(d.Sex == sex || sex == null) {
+                    data[7].value += 1;
+                    fluSel.push(d);
+                }
+            });
+            
+            if(sliceArr[picked] == 'heart disease'){
+                console.log(heartDisSel[0]);
+            } else if(sliceArr[picked] == 'cancer'){
+                console.log(cancerSel[0]);
+            } else if(sliceArr[picked] == 'respiratory disease'){
+                console.log(respDisSel[0]);
+            } else if(sliceArr[picked] == 'accidents'){
+                console.log(accidentSel[0]);
+            } else if(sliceArr[picked] == 'stroke'){
+                console.log(strokeSel[0]);
+            } else if(sliceArr[picked] == "Alzheimer's disease"){
+                console.log(alzheimerSel[0]);
+            } else if(sliceArr[picked] == 'diabetes'){
+                console.log(diabetesSel[0]);
+            } else if(sliceArr[picked] == 'influenza and pneumonia'){
+                console.log(fluSel[0]);
+            }
+
             arcs.data(pie(data));
             arcPath.data(pie(data));
             arcPath.transition().attrTween("d", arcTween);
@@ -328,6 +414,7 @@
         var spinButt = container.append("circle")
             .attr("cx", 0)
             .attr("cy", 0)
+            .attr("class", "spin-button")
             .attr("r", 60)
             .style({"fill":"white","cursor":"pointer"});
         spinButt.on("click", spin); //TODO: FIX THE DRAG AFTER A SPIN
