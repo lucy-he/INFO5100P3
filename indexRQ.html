@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <script src="js/bootstrap.min.js"></script>
     <style>
-
     p{
         font-size:18px;
     }
@@ -20,12 +19,7 @@
         #headerimg{
             display:none !important;
         }
-          .btn {
-    padding: 14px 24px;
-    border: 0 none;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+
 }
 
     }
@@ -36,14 +30,7 @@
         #headerimg{
             display:none !important;
         }
-      .btn {
-    padding: 7px 5px;
-    border: 0 none;
-    font-size:10px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
+      
     .navbar-brand{
       font-size:16px !important;
     }
@@ -53,19 +40,25 @@
         .smallsize-only{
             display:none;
         }
-         .btn {
-    padding: 14px 24px;
-    border: 0 none;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
-
+        
  
         }
+        @media (max-width: 768px) {
+    .btn,.btn-group {
+        width:100%;
+        
+    }
+}
 .btn:focus, .btn:active:focus, .btn.active:focus {
-    outline: 0 none;
+     background-image: none !important;
+      outline: none !important;
+      -webkit-box-shadow: none !important;
+      box-shadow: none !important;
     background:#996666 !important;
+}
+
+*:focus {
+    outline: none !important;
 }
 .btn-success:hover, .btn-success:active, .btn-success:focus {
      background:#996666 !important;
@@ -84,6 +77,8 @@
     background: #996666 !important;
     box-shadow: none;
 }
+
+
     </style>
 </head>
 
@@ -130,7 +125,7 @@
       </div>
 </div>
                 <div id="agegroup" class="btn-group">
-  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Age
+  <button class="btn btn-primary dropdown-toggle btn-responsive" type="button" data-toggle="dropdown">Age
   <span class="caret"></span></button>
   <ul id="age" class="dropdown-menu">
     <li><a>1 to 20</a></li>
@@ -141,7 +136,7 @@
   </ul>
 </div>
 <div id="sexgroup" class="btn-group">
-  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Sex
+  <button class="btn btn-primary dropdown-toggle btn-responsive" type="button" data-toggle="dropdown">Sex
   <span class="caret"></span></button>
   <ul id="sex" class="dropdown-menu">
     <li><a>Male</a></li>
@@ -149,7 +144,7 @@
   </ul>
   </div>
 <div id="ethnicitygroup" class="btn-group">
-  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Ethnicity
+  <button class="btn btn-primary dropdown-toggle btn-responsive" type="button" data-toggle="dropdown">Ethnicity
   <span class="caret"></span></button>
   <ul id="ethnicity" class="dropdown-menu">
     <li><a>Puerto Rico (Only)</a></li>
@@ -160,7 +155,7 @@
   </ul>
 </div>
 <div id="educationgroup" class="btn-group">
- <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Education
+ <button class="btn btn-primary dropdown-toggle btn-responsive" type="button" data-toggle="dropdown">Education
   <span class="caret"></span></button>
   <ul id="education" class="dropdown-menu">
     <li><a>8th Grade or Less</a></li>
