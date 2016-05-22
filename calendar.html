@@ -386,40 +386,54 @@
             .attr("height", calHeight)
             .style({"padding-top": calPaddingVer});
 
-        // month
+        // data for selected death cause
 
         var deathCause;
-        var deathCauseData = accident;
+        var deathCauseData = heartDis;
 
-        var deathCauseMonthData = [0,0,0,0,0,0,0,0,0,0,0,0];
+        var deathMonthData = {};
+        for (var m = 1; m <= 12; m++) {
+            deathMonthData[m] = [];
+        }
 
         deathCauseData.forEach(function(d){
-            deathCauseMonthData[d.MonthOfDeath-1]++;
+            deathMonthData[d.MonthOfDeath].push(d);
         });
 
-        console.log(deathCauseMonthData);
-
-        var maxMonth = 0;
-        var maxMonthCount = 0;
-        for (var m = 0; m < deathCauseMonthData.length; m++) {
-            if (maxMonthCount < deathCauseMonthData[m]) {
-                maxMonthCount = deathCauseMonthData[m];
-                maxMonth = m;
+        var deathMonth = 1;
+        var deathMonthCount = 0;
+        for (var m in deathMonthData) {
+            if (deathMonthCount < deathMonthData[m].length) {
+                deathMonthCount = deathMonthData[m].length;
+                deathMonth = m;
             }
         }
 
+        // month display
+
         var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-        var deathMonth = months[maxMonth];
+        var deathMonthLabel = months[deathMonth-1];
 
         svgCal.append("text")
             .attr("x", calWidth/2)
             .attr("y", calPaddingVer)
             .attr("text-anchor", "middle")
-            .text(deathMonth)
+            .text(deathMonthLabel)
             .style({"font-size": calHeight * 0.13});
 
-        // day
+        // day display
+
+        var deathDayData = {};
+        for (var d = 1; d <= 7; d++) {
+            deathDayData[d] = 0;
+        }
+
+        deathMonthData[deathMonth].forEach(function(d){
+            deathDayData[d.DayOfWeekOfDeath]++;
+        });
+
+        console.log(deathDayData);
 
         var days = ["S","M","T","W","T","F","S"];
 
