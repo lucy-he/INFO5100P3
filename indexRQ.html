@@ -140,36 +140,36 @@
     <li><a>81 to 100</a></li>
   </ul>
 </div>
-<div id="sex" class="btn-group">
+<div id="sexgroup" class="btn-group">
   <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Sex
   <span class="caret"></span></button>
   <ul id="sex" class="dropdown-menu">
-    <li><a href="#">Male</a></li>
-    <li><a href="#">Female</a></li>
+    <li><a>Male</a></li>
+    <li><a>Female</a></li>
   </ul>
   </div>
-<div id="ethnicity" class="btn-group">
+<div id="ethnicitygroup" class="btn-group">
   <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Ethnicity
   <span class="caret"></span></button>
   <ul id="ethnicity" class="dropdown-menu">
-    <li><a href="#">Puerto Rico (Only)</a></li>
-    <li><a href="#">White</a></li>
-    <li><a href="#">Black</a></li>
-    <li><a href="#">American Indian</a></li>
-    <li><a href="#">Asian or Pacific Islander</a></li>
+    <li><a>Puerto Rico (Only)</a></li>
+    <li><a>White</a></li>
+    <li><a>Black</a></li>
+    <li><a>American Indian</a></li>
+    <li><a>Asian or Pacific Islander</a></li>
   </ul>
 </div>
-<div id="education" class="btn-group">
+<div id="educationgroup" class="btn-group">
  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Education
   <span class="caret"></span></button>
   <ul id="education" class="dropdown-menu">
-    <li><a href="#">8th Grade or Less</a></li>
-    <li><a href="#">9th-12th Grade (No Diploma)</a></li>
-    <li><a href="#">High School Graduate or GED Completed</a></li>
-    <li><a href="#">Some College Credit, No Degree</a></li>
-    <li><a href="#">Associate's Degree</a></li>
-    <li><a href="#">Bachelor's Degree</a></li>
-    <li><a href="#">Master's Degree</a></li>
+    <li><a>8th Grade or Less</a></li>
+    <li><a>9th-12th Grade (No Diploma)</a></li>
+    <li><a>High School Graduate or GED Completed</a></li>
+    <li><a>Some College Credit, No Degree</a></li>
+    <li><a>Associate's Degree</a></li>
+    <li><a>Bachelor's Degree</a></li>
+    <li><a>Master's Degree</a></li>
     <li><a>PhD Degree</a></li>
   </ul>
 </div>
@@ -181,11 +181,32 @@
 
 <script>
 var age;
+var sex;
+var ethnicity;
+var education;
 $('#age li a').on('click', function(){
     age = $(this).text();
     $(this).parents("#agegroup").find('.btn').html($(this).text());
     console.log(age);
 });
+$('#sex li a').on('click', function(){
+    age = $(this).text();
+    $(this).parents("#sexgroup").find('.btn').html($(this).text());
+    console.log(sex);
+});
+$('#ethnicity li a').on('click', function(){
+    age = $(this).text();
+    $(this).parents("#ethnicitygroup").find('.btn').html($(this).text());
+    console.log(ethnicity);
+});
+$('#education li a').on('click', function(){
+    age = $(this).text();
+    $(this).parents("#educationgroup").find('.btn').html($(this).text());
+    console.log(education);
+});
 console.log(age);
+console.log(sex);
+console.log(ethnicity);
+console.log(education);
 </script>
 </html>
