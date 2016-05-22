@@ -393,19 +393,46 @@
 
         var deathMonthData = {};
         for (var m = 1; m <= 12; m++) {
-            deathMonthData[m] = [];
+            deathMonthData[m] = {};
+            for (var d = 1; d <= 7; d++) {
+                deathMonthData[m][d] = [];
+            }
         }
 
         deathCauseData.forEach(function(d){
-            deathMonthData[d.MonthOfDeath].push(d);
+            deathMonthData[d.MonthOfDeath][d.DayOfWeekOfDeath].push(d);
         });
+
+        // counts for selected death cause
 
         var deathMonth = 1;
         var deathMonthCount = 0;
-        for (var m in deathMonthData) {
-            if (deathMonthCount < deathMonthData[m].length) {
-                deathMonthCount = deathMonthData[m].length;
+        // var dayCounts = [];
+
+        for (var m = 1; m <= 12; m++) {
+            var thisMonthCount = 0;
+            for (var d = 1; d <= 7; d++) {
+                thisMonthCount += deathMonthData[m][d].length;
+                // dayCounts.push(deathMonthData[m][d].length);
+            }
+            if (deathMonthCount < thisMonthCount) {
+                deathMonthCount = thisMonthCount;
                 deathMonth = m;
+            }
+        }
+
+        // var dayCountMin = Math.min.apply(null, dayCounts);
+        // var dayCountMax = Math.max.apply(null, dayCounts);
+
+        var dayCountMin = deathMonthData[deathMonth][1].length;
+        var dayCountMax = deathMonthData[deathMonth][1].length;
+
+        for (var d = 2; d <= 7; d++) {
+            var dayCount = deathMonthData[deathMonth][d].length
+            if (dayCountMin > dayCount) {
+                dayCountMin = dayCount;
+            } else if (dayCountMax < dayCount) {
+                dayCountMax = dayCount;
             }
         }
 
@@ -424,20 +451,11 @@
 
         // day display
 
-        var deathDayData = {};
-        for (var d = 1; d <= 7; d++) {
-            deathDayData[d] = 0;
-        }
-
-        deathMonthData[deathMonth].forEach(function(d){
-            deathDayData[d.DayOfWeekOfDeath]++;
-        });
-
-        console.log(deathDayData);
-
         var days = ["S","M","T","W","T","F","S"];
 
-        for (var d = 0; d < days.length; d++) {
+        var opacityScale = d3.scale.linear().domain([dayCountMin,dayCountMax]).range([0.1,1]);
+
+        for (var d = 0; d <= 6; d++) {
             svgCal.append("text")
                 .attr("x", calPaddingHor + barWidth * d + barWidth / 2)
                 .attr("y", calPaddingVer * 2.65)
@@ -450,8 +468,8 @@
                 .attr("width", barWidth - 2 * barPadding)
                 .attr("x", calPaddingHor + barPadding + barWidth * d)
                 .attr("y", calHeight - calPaddingVer - barHeight)
-                .style("fill", "black")
-                .style("stroke", "#fff");
+                .style("fill", "#660000")
+                .style("fill-opacity", opacityScale(deathMonthData[deathMonth][d+1].length));
         }
 
         // end of Calendar
