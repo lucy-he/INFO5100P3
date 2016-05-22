@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>wheel-cal</title>
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-	<style>
+    <title>wheel-cal</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <style>
     *.unselectable {
        -moz-user-select: -moz-none;
        -khtml-user-select: none;
@@ -57,13 +57,23 @@
         border: solid black 1px;
         margin-top: 600px;
     }
-	</style>
+    </style>
 </head>
 <body>
 <div id="selection"></div>
 <div id="question"><h1></h1></div>
 <div id="chart"></div>
 <div id="calendar"></div>
+<div>
+    <svg id="calendar-scale">
+        <defs> <!--Set up the color scale of the axis-->
+            <linearGradient id="calendar-scale-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#660000;stop-opacity:0.1" />
+                <stop offset="100%" style="stop-color:#660000;stop-opacity:1" />
+            </linearGradient>
+        </defs>
+    </svg>
+</div>
 <script>
     var data;
     var change;
@@ -154,9 +164,9 @@
 
         var padding = {top:20, right:40, bottom:20, left:0},
             w = parseInt(d3.select('#chart').style('width'), 10)
-      		, w = w - padding.left - padding.right,
+            , w = w - padding.left - padding.right,
             h = parseInt(d3.select('#chart').style('height'), 10)
-      		,h = h - padding.top - padding.bottom,
+            ,h = h - padding.top - padding.bottom,
             r = Math.min(w, h)/2,
             picked = 0,
             color = d3.scale.category20();
@@ -456,6 +466,10 @@
                 d3.select('#svg-cal').remove();
             }
 
+            if (d3.select('#svg-cal-scale')) {
+                d3.select('#svg-cal-scale').remove();
+            }
+
             var calWidth = 300;
             var calHeight = calWidth;
             var calPaddingHor = calWidth * 0.05;
@@ -567,6 +581,41 @@
                     .style("fill", "#660000")
                     .style("fill-opacity", opacityScale(deathMonthData[deathMonth][d+1].length));
             }
+
+            // opacity scale display
+
+            var calScaleHeight = calHeight * 0.05;
+
+            var svgCalScale = d3.select('#calendar-scale').append("g")
+                .attr("id", "svg-cal-scale")
+                .attr("width", calWidth)
+                .style({"margin-top": calScaleHeight});
+
+            svgCalScale.append("rect")
+                .attr("height", calScaleHeight)
+                .attr("width", calWidth)
+                .style("fill", "url(#calendar-scale-gradient)");
+
+            svgCalScale.append("text")
+                .attr("x", calWidth / 2)
+                .attr("y", calScaleHeight * 2.5)
+                .attr("text-anchor", "middle")
+                .text("# of Deaths")
+                .style({"font-size": calScaleHeight});
+
+            svgCalScale.append("text")
+                .attr("x", 0)
+                .attr("y", calScaleHeight * 2.5)
+                .attr("text-anchor", "start")
+                .text(dayCountMin)
+                .style({"font-size": calScaleHeight});
+
+            svgCalScale.append("text")
+                .attr("x", calWidth)
+                .attr("y", calScaleHeight * 2.5)
+                .attr("text-anchor", "end")
+                .text(dayCountMax)
+                .style({"font-size": calScaleHeight});
         }
     });
 </script>
