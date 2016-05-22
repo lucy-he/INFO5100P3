@@ -586,10 +586,11 @@
 
             var calScaleHeight = calHeight * 0.05;
 
-            var svgCalScale = d3.select('#calendar-scale').append("g")
-                .attr("id", "svg-cal-scale")
+            var svgCalScale = d3.select('#calendar-scale')
                 .attr("width", calWidth)
-                .style({"margin-top": calScaleHeight});
+                .style({"margin-top": calScaleHeight})
+                .append("g")
+                    .attr("id", "svg-cal-scale");
 
             svgCalScale.append("rect")
                 .attr("height", calScaleHeight)
