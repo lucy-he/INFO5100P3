@@ -56,7 +56,6 @@
     #svg-cal {
         border: solid lightgray 1px;
         box-shadow: 2px 2px lightgray;
-
     }
     #calheadline{
         margin-top: 550px;
@@ -166,13 +165,11 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <p>Over the last five years, the main causes of death in the US have remained fairly consistent, although unintentional injuries (accidents) became the fourth leading cause of death in 2014, while stroke became the fifth.</p>
+                <p>Over the last five years, the main causes of death in the US have remained fairly consistent, although unintentional injuries (accidents) became the fourth leading cause of death in 2013, while stroke became the fifth.</p>
                 <h3>Your Demographic Profile</h3>
                 <p>Input an ethnicity, age, gender, or education level to see what month and day of the week you will most likely die. </p>
 
-      </div>
-</div>
-                <div id="agegroup" class="btn-group">
+          <div id="agegroup" class="btn-group">
   <button class="btn btn-primary dropdown-toggle btn-responsive" type="button" data-toggle="dropdown">Age
   <span class="caret"></span></button>
   <ul id="age" class="dropdown-menu">
@@ -216,16 +213,12 @@
     <li><a>PhD Degree</a></li>
   </ul>
 </div>
-<div class="row">
-<div class="col-md-12">
-<div id="question"><h1></h1></div>
-</div>
-</div>
 
-<div id="chart"></div>
+            </div>
+        </div>
 
-<div class="row">
-    <div class="col-md-12">
+<br>
+<div id="chart"><div id="question"><h1></h1></div></div>
 
 <div id="calendar"></div>
 <div>
@@ -240,6 +233,7 @@
 </div>
 </div>
 </div>
+
 </div>
 <script>
     console.log("starting");
@@ -746,7 +740,6 @@
 
             d3.select("#calendar").append("h3").attr("id","calheadline").text("Your Predicted Death");
             d3.select("#calendar").append("p").attr("id","caltext").text("When will you die? The more intense the color, the more likely you will die of that cause on this day and month.");
-
             var svgCal = d3.select('#calendar').append("svg")
                 .attr("id", "svg-cal")
                 .attr("width",  calWidth)
