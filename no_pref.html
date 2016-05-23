@@ -39,16 +39,15 @@
         top:0;
         left:520px;
     }
-    #question h1{
+
+    //Changed
+    #chart h1{
         font-size: 50px;
         font-weight: bold;
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        position: absolute;
         padding: 0;
-        margin: 0;
-        top:50%;
-        -webkit-transform:translate(0,-50%);
-                transform:translate(0,-50%);
+        display:block;
+        
     }
     .spin-button:focus, .spin-button:active{
         outline: none !important;
@@ -226,11 +225,12 @@
         </div>
 
 <br>
-<div id="chart"><div id="question"><h1></h1></div></div>
-
-<div id="calendar"></div>
-<div>
-    <svg id="calendar-scale">
+//changed
+<div id="chart"><div id="question"></div><h1></h1></div>
+//endchange
+<div style="float:right;" class="col-xs-6">
+<div id="calendar" ></div>
+    <svg id="calendar-scale" >
         <defs> <!--Set up the color scale of the axis-->
             <linearGradient id="calendar-scale-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" style="stop-color:#660000;stop-opacity:0.1" />
@@ -638,7 +638,9 @@
 
                 //populate question TODO
                 picked = Math.floor(((angleDeg%360)/360)*sliceArr.length);
-                d3.select("#question h1")
+
+                //changed
+                d3.select("#chart h1")
                     .text(sliceArr[picked]);
 
                 updateCalendar(sliceArr[picked]);
@@ -710,7 +712,9 @@
                     oldrotation = angleDeg;
                     //populate question TODO
                     picked = Math.floor((((angleDeg)%360)/360)*sliceArr.length);
-                    d3.select("#question h1")
+
+                    //changed
+                    d3.select("#chart h1")
                         .text(sliceArr[picked]);
                     updateCalendar(sliceArr[picked]);
                 });
@@ -725,8 +729,6 @@
         }
 
         spin();
-        d3.select("#calendar").append("h3").attr("id","calheadline").text("Your Predicted Death");
-            d3.select("#calendar").append("p").attr("id","caltext").text("When will you die? The more intense the color, the more likely you will die of that cause on this day and month.");
         function updateCalendar(deathCause) {
             // calendar display
 
