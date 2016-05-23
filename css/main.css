@@ -1,0 +1,141 @@
+/*Centers the columns 
+for responsive design visuals*/
+.col-center {
+  width: 300px;
+  height: 480px;
+  margin: 0 auto;
+}
+
+.how-when-labels {
+  text-align: center;
+  font-size: 50px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/*Removes highlight around 
+selected items*/
+*.unselectable {
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+       /*
+         Introduced in IE 10.
+         See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+       */
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#chart {
+  width: 300px;
+  height: 300px;
+}
+
+#question h1 { 
+  font-size: 40px;
+  text-align: center;
+}
+
+/*Removes highlight around selected spin button*/
+.spin-button:focus, .spin-button:active {
+  outline: none !important;
+}
+
+#svg-cal {
+  border: solid lightgray 1px;
+  box-shadow: 2px 2px lightgray;
+}
+
+p {
+  font-size: 18px;
+}
+
+/*desktop version*/
+@media (min-width:981px) {
+  .smallsize-only {
+    display: none !important;
+  }
+}
+
+/*Tablet version*/
+@media(max-width:995px) and (min-width:981px) {
+  #headerimg {
+    display: none !important;
+  }
+  
+  .btn,.btn-group {
+    width: 100% !important;
+  }
+
+  .dropdown-menu {
+    width: 100% !important;
+    text-align: center;
+    margin: auto;
+  }
+}
+
+/*Mobile version*/
+@media(max-width:980px) and (min-width:0px) {
+  .largersize-only {
+    display: none !important;
+  }
+
+  #headerimg {
+    display: none !important;
+  }
+
+  .navbar-brand {
+    font-size: 16px !important;
+  }
+
+  .smallsize-only {
+    text-align: center;
+    margin: auto;
+  }
+
+  .btn,.btn-group {
+    width: 100% !important;
+  }
+
+  .dropdown-menu {
+    width: 100% !important;
+    text-align: center;
+    margin: auto;
+  }
+}
+
+/*Input button styling*/
+.btn {
+  border: 0 none;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.btn, .btn-group, .btn-primary {
+  border-color: transparent !important;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus {
+  background: #996666 !important;
+}
+
+.btn-success:hover, .btn-success:active, .btn-success:focus {
+  background: #996666 !important;
+  outline: none !important;
+}
+
+.btn-primary {
+  background: #660000;
+  color: #ffffff;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+  background: #996666 !important;
+}
+
+.btn-primary:active, .btn-primary.active {
+  background: #996666 !important;
+  box-shadow: none;
+}
