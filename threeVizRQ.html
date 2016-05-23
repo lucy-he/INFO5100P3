@@ -53,12 +53,13 @@
     .spin-button:focus, .spin-button:active{
         outline: none !important;
     }
+    /*SOO*/
+    #calendar {
+        margin-top: 600px;
+    }
     #svg-cal {
         border: solid lightgray 1px;
         box-shadow: 2px 2px lightgray;
-    }
-    #calheadline{
-        margin-top: 550px;
     }
 
         p{
@@ -219,8 +220,10 @@
 
 <br>
 <div id="chart"><div id="question"><h1></h1></div></div>
-
-<div id="calendar"></div>
+<div id="calendar">
+    <h3>Your Predicted Death</h3>
+    <p>When will you die? The more intense the color, the more likely you will die of that cause on this day and month.</p>
+</div>
 <div>
     <svg id="calendar-scale">
         <defs> <!--Set up the color scale of the axis-->
@@ -717,8 +720,7 @@
         }
 
         spin();
-        d3.select("#calendar").append("h3").attr("id","calheadline").text("Your Predicted Death");
-            d3.select("#calendar").append("p").attr("id","caltext").text("When will you die? The more intense the color, the more likely you will die of that cause on this day and month.");
+        
         function updateCalendar(deathCause) {
             // calendar display
 
