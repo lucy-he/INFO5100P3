@@ -29,8 +29,8 @@
     }
     #chart{
         position:absolute;
-        width:320px;
-        height:320px;
+        width:300px;
+        height:300px;
     }
     #question{
         position: absolute;
@@ -665,8 +665,9 @@
             curAngle = curAngle * 180 / Math.PI;
         }
         function dragCalc(x,y){
-            console.log(x+' , '+y);
             if (isDown) {
+                x += $('#chart')[0].getBoundingClientRect().left;
+                y += $('#chart')[0].getBoundingClientRect().top;
                 angleDeg = Math.atan2(y, x);
                 if (angleDeg < 0) angleDeg += 2 * Math.PI;
                 angleDeg = angleDeg * 180 / Math.PI;
