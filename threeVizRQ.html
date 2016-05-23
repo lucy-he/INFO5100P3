@@ -55,8 +55,11 @@
     }
     #svg-cal {
         border: solid lightgray 1px;
-        margin-top: 600px;
         box-shadow: 2px 2px lightgray;
+
+    }
+    #calheadline{
+        margin-top: 550px;
     }
 
         p{
@@ -163,7 +166,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <p>Over the last five years, the main causes of death in the US have remained fairly consistent, although unintentional injuries (accidents) became the fourth leading cause of death in 2013, while stroke became the fifth.</p>
+                <p>Over the last five years, the main causes of death in the US have remained fairly consistent, although unintentional injuries (accidents) became the fourth leading cause of death in 2014, while stroke became the fifth.</p>
                 <h3>Your Demographic Profile</h3>
                 <p>Input an ethnicity, age, gender, or education level to see what month and day of the week you will most likely die. </p>
 
@@ -213,13 +216,17 @@
     <li><a>PhD Degree</a></li>
   </ul>
 </div>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vehicula lacus non accumsan cursus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque eget est gravida, facilisis tortor sed, pretium velit. Cras risus tellus, elementum in neque a, ullamcorper auctor magna. Nunc elementum arcu metus, gravida aliquet dolor sodales eu. Nunc eget pharetra dolor. Morbi nec ipsum rhoncus, vulputate nunc vitae, varius diam. Nam placerat urna nec odio finibus sollicitudin. Sed aliquam augue vitae mauris auctor, in placerat eros ornare. Phasellus ut condimentum dui, id lacinia nisi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur porttitor vel nisi et tristique. Curabitur gravida tincidunt purus sit amet mollis.</p>
-                </div>
-            </div>
-        </div>
-
+<div class="row">
+<div class="col-md-12">
 <div id="question"><h1></h1></div>
+</div>
+</div>
+
 <div id="chart"></div>
+
+<div class="row">
+    <div class="col-md-12">
+
 <div id="calendar"></div>
 <div>
     <svg id="calendar-scale">
@@ -230,6 +237,9 @@
             </linearGradient>
         </defs>
     </svg>
+</div>
+</div>
+</div>
 </div>
 <script>
     console.log("starting");
@@ -391,7 +401,8 @@
             ,h = h - padding.top - padding.bottom,
             r = Math.min(w, h)/2,
             picked = 0,
-            color = d3.scale.category20();
+            color = d3.scale.ordinal()
+                        .range(["#660000","#843232","#934c4c","#a36666","#c19999","#d1b2b2","#e0cccc","#efe5e5"]);
             
         // declare an arc generator function
         var arc = d3.svg.arc()
@@ -732,6 +743,9 @@
             var barWidth = (calWidth - 2 * calPaddingHor) / 7;
             var barHeight = calHeight * 0.475;
             var barPadding = barWidth * 0.1;
+
+            d3.select("#calendar").append("h3").attr("id","calheadline").text("Your Predicted Death");
+            d3.select("#calendar").append("p").attr("id","caltext").text("When will you die? The more intense the color, the more likely you will die of that cause on this day and month.");
 
             var svgCal = d3.select('#calendar').append("svg")
                 .attr("id", "svg-cal")
