@@ -717,7 +717,8 @@
         }
 
         spin();
-        
+        d3.select("#calendar").append("h3").attr("id","calheadline").text("Your Predicted Death");
+            d3.select("#calendar").append("p").attr("id","caltext").text("When will you die? The more intense the color, the more likely you will die of that cause on this day and month.");
         function updateCalendar(deathCause) {
             // calendar display
 
@@ -738,8 +739,6 @@
             var barHeight = calHeight * 0.475;
             var barPadding = barWidth * 0.1;
 
-            d3.select("#calendar").append("h3").attr("id","calheadline").text("Your Predicted Death");
-            d3.select("#calendar").append("p").attr("id","caltext").text("When will you die? The more intense the color, the more likely you will die of that cause on this day and month.");
             var svgCal = d3.select('#calendar').append("svg")
                 .attr("id", "svg-cal")
                 .attr("width",  calWidth)
