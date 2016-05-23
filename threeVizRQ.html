@@ -54,7 +54,7 @@
         outline: none !important;
     }
     /*SOO*/
-    #calendar {
+    #calendar-description {
         margin-top: 600px;
     }
     #svg-cal {
@@ -220,10 +220,12 @@
 
 <br>
 <div id="chart"><div id="question"><h1></h1></div></div>
-<div id="calendar">
+<!--SOO-->
+<div id="calendar-description">
     <h3>Your Predicted Death</h3>
     <p>When will you die? The more intense the color, the more likely you will die of that cause on this day and month.</p>
 </div>
+<div id="calendar"></div>
 <div>
     <svg id="calendar-scale">
         <defs> <!--Set up the color scale of the axis-->
@@ -721,6 +723,7 @@
 
         spin();
         
+        // SOO
         function updateCalendar(deathCause) {
             // calendar display
 
