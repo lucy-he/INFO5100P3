@@ -676,6 +676,8 @@
         
         function dragInit(x,y){
             isDown = true;
+            x += $('#chart')[0].getBoundingClientRect().left;
+            y += $('#chart')[0].getBoundingClientRect().top;   
             curAngle = Math.atan2(y, x);
             if (curAngle < 0) {
                 curAngle += 2 * Math.PI;
