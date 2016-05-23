@@ -10,6 +10,17 @@
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <script src="js/bootstrap.min.js"></script>
     <style>
+    .col-center {
+        width: 300px;
+        height: 480px;
+        margin: 0 auto;
+    }
+    .how-when-labels {
+        text-align: center;
+        font-size: 50px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
     *.unselectable {
        -moz-user-select: -moz-none;
        -khtml-user-select: none;
@@ -28,27 +39,12 @@
         pointer-events:none;
     }
     #chart{
-        position:absolute;
         width:300px;
         height:300px;
     }
-    #question{
-        position: absolute;
-        width:400px;
-        height:500px;
-        top:0;
-        left:520px;
-    }
     #question h1{
-        font-size: 50px;
-        font-weight: bold;
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        position: absolute;
-        padding: 0;
-        margin: 0;
-        top:50%;
-        -webkit-transform:translate(0,-50%);
-                transform:translate(0,-50%);
+        font-size: 40px;
+        text-align: center;
     }
     .spin-button:focus, .spin-button:active{
         outline: none !important;
@@ -227,23 +223,45 @@
         </div>
 
 <br>
-<div id="chart"><div id="question"><h1 class="unselectable"></h1></div></div>
-<!--SOO-->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-center">
+                <div class="how-when-labels">How</div>
+                <div id="chart"></div>
+                <div id="question"><h1 class="unselectable"></h1>
+                </div>
+            </div>            
+        </div>
+        <div class="col-md-6">
+            <div class="col-center">
+                <div class="how-when-labels">When</div>
+                <div id="calendar"></div>
+                <div>
+                    <svg id="calendar-scale">
+                        <defs> <!--Set up the color scale of the axis-->
+                            <linearGradient id="calendar-scale-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#660000;stop-opacity:0.1" />
+                                <stop offset="100%" style="stop-color:#660000;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="chart">
+    <div id="question"><h1 class="unselectable"></h1></div>
+</div>
+
 <div id="calendar-description">
     <h3>Your Predicted Death</h3>
     <p>When will you die? The more intense the color, the more likely you will die of that cause on this day and month.</p>
 </div>
-<div id="calendar"></div>
-<div>
-    <svg id="calendar-scale">
-        <defs> <!--Set up the color scale of the axis-->
-            <linearGradient id="calendar-scale-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style="stop-color:#660000;stop-opacity:0.1" />
-                <stop offset="100%" style="stop-color:#660000;stop-opacity:1" />
-            </linearGradient>
-        </defs>
-    </svg>
-</div>
+
 </div>
 </div>
 
