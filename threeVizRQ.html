@@ -50,9 +50,7 @@
         outline: none !important;
     }
     /*SOO*/
-    #calendar-description {
-        margin-top: 600px;
-    }
+
     #svg-cal {
         border: solid lightgray 1px;
         box-shadow: 2px 2px lightgray;
@@ -61,14 +59,20 @@
         p{
             font-size:18px;
         }
-        @media (min-width:996px){
+        @media (min-width:981px){
             .smallsize-only{
                 display:none !important;
             }    
             
     }
-        
-        @media(max-width:995px) and (min-width:0px){
+        @media(max-width:995px) and (min-width:981px){
+            #headerimg{
+                display:none !important;
+            }
+
+
+        }
+        @media(max-width:980px) and (min-width:0px){
            .largersize-only{
                 display:none !important;
             }    
@@ -142,14 +146,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-10">
-                    <div class="smallsize-only" style="text-align:center">
-                    <img src="images/tomb.png"height="200" width="200">
+                    <div class="smallsize-only">
+                    <img src="images/tomb.png" height="200" width="200">
                     <h1>How Will You Die? </h1>
                     <p>Below are details regarding the causes of these fatalities and the lifestyle choices you can make to help avoid them.</p>
                     </div>
-                    <h1 class="largersize-only">How Will You Die? </h1>
-                    <p class="largersize-only"> Of all the causes of death in the United States of America, just 5 account for over 70% or 7 out of every 10 deaths. Of these, just two, heart disease and cancer, account for over half of all deaths in the country. This trend has persisted for many years. Below are details regarding the causes of these fatalities and the lifestyle choices you can make to help avoid them.</p>
-
+                    <div class="largersize-only">
+                    <h1>How Will You Die? </h1>
+                    <p > Of all the causes of death in the United States of America, just 5 account for over 70% or 7 out of every 10 deaths. Of these, just two, heart disease and cancer, account for over half of all deaths in the country. This trend has persisted for many years. Below are details regarding the causes of these fatalities and the lifestyle choices you can make to help avoid them.</p>
+                    </div>
                     
                 </div>
 
@@ -253,14 +258,7 @@
     </div>
 </div>
 
-<div id="chart">
-    <div id="question"><h1 class="unselectable"></h1></div>
-</div>
 
-<div id="calendar-description">
-    <h3>Your Predicted Death</h3>
-    <p>When will you die? The more intense the color, the more likely you will die of that cause on this day and month.</p>
-</div>
 
 </div>
 </div>
@@ -355,7 +353,7 @@
     var diabetesSel = diabetes;
     var fluSel = flu;
 
-    d3.csv("DeathRecordsFinal.csv", function(deaths) {
+    d3.csv("csv/DeathRecordsFinal.csv", function(deaths) {
 
         deaths.forEach(function(d) {
             if(d.Icd10Code[0] == "I" 
