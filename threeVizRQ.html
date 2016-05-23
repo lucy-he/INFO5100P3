@@ -410,9 +410,9 @@
         }
         updateSliceArr();
 
-        var padding = {top:20, right:40, bottom:20, left:0},
+        var padding = {top:20, right:40, bottom:20},
             w = parseInt(d3.select('#chart').style('width'), 10)
-            , w = w - padding.left - padding.right,
+            , w = w - padding.right,
             h = parseInt(d3.select('#chart').style('height'), 10)
             ,h = h - padding.top - padding.bottom,
             r = Math.min(w, h)/2,
@@ -438,7 +438,7 @@
             .attr('preserveAspectRatio','xMinYMin');
 
         var container = svg.append("g")
-            .attr("transform", "translate(" + (w/2 + padding.left) + "," + (h/2 + padding.top) + ")");
+            .attr("transform", "translate(" + (w/2) + "," + (h/2 + padding.top) + ")");
 
         // select paths, use arc generator to draw
         var arcs = container.selectAll("g.slice")
@@ -487,8 +487,8 @@
 
 
         //make arrow
-        svg.append("g")
-            .attr("transform", "translate(" + (w/2 + padding.left) + "," + 15 + ") rotate(270) ")
+        var arrow = svg.append("g")
+            .attr("transform", "translate(" + (w/2) + "," + 15 + ") rotate(270) ")
             .append("path")
             .attr("d", "M-" + (r*.15) + ",0L0," + (r*.05) + "L0,-" + (r*.05) + "Z")
             .style({"fill":"black"});
@@ -628,6 +628,15 @@
             d3.select("#question h1")
                 .text(sliceArr[picked]);
 
+            var totNum = heartDisSel.length+cancerSel.length+respDisSel.length+fluSel.length+diabetesSel.length+accidentSel.length+alzheimerSel.length+strokeSel.length;
+            if(totNum == 0) {
+                spinText.text('No Data Found');
+                arrow.attr('visibility','hidden');
+            } else{
+                spinText.text('SPIN');
+                arrow.attr('visibility','visible');
+            }
+
             updateCalendar(sliceArr[picked]);
         };
 
@@ -665,7 +674,7 @@
                 if (angleDeg < 0) angleDeg += 360; 
                 
                 //spin image
-                container.attr("transform", "translate(" + (w / 2 + padding.left) + "," + (h / 2 + padding.top) + ") rotate(" + angleDeg + "," + 0 + "," + 0 + ")");
+                container.attr("transform", "translate(" + (w / 2) + "," + (h / 2 + padding.top) + ") rotate(" + angleDeg + "," + 0 + "," + 0 + ")");
                 // console.log(angleDeg);
 
                 //populate question TODO
@@ -724,7 +733,7 @@
 
         //spin text
         var spinText = svg.append("text")
-            .attr("x", w/2 + padding.left)
+            .attr("x", w/2)
             .attr("y", h/2 + padding.top)
             .attr("text-anchor", "middle")
             .text("SPIN")
@@ -751,7 +760,7 @@
         function rotTween(to) {
             var i = d3.interpolate(oldrotation % 360, (angleDeg));
             return function(t) {
-                return "translate(" + (w / 2 + padding.left) + "," + (h / 2 + padding.top) + ") rotate(" + i(t) + ")";
+                return "translate(" + (w / 2) + "," + (h / 2 + padding.top) + ") rotate(" + i(t) + ")";
                 };
         }
 
