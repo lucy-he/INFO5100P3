@@ -729,7 +729,7 @@
             var calPaddingVer = calHeight * 0.1;
 
             var barWidth = (calWidth - 2 * calPaddingHor) / 7;
-            var barHeight = calHeight * 0.6;
+            var barHeight = calHeight * 0.475;
             var barPadding = barWidth * 0.1;
 
             var svgCal = d3.select('#calendar').append("svg")
@@ -826,11 +826,13 @@
                     .text(days[d])
                     .style({"font-size": calHeight * 0.08});
 
+                console.log(calHeight,calPaddingVer,barHeight);
+
                 svgCal.append("rect")
                     .attr("height", barHeight)
                     .attr("width", barWidth - 2 * barPadding)
                     .attr("x", calPaddingHor + barPadding + barWidth * d)
-                    .attr("y", calHeight - calPaddingVer - barHeight)
+                    .attr("y", calHeight - calPaddingVer * 2 - barHeight)
                     .style("fill", "#660000")
                     .style("fill-opacity", opacityScale(deathMonthData[deathMonth][d+1].length));
             }
