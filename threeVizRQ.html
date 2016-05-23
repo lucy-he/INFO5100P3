@@ -227,7 +227,7 @@
         </div>
 
 <br>
-<div id="chart"><div id="question" class="unselectable"><h1></h1></div></div>
+<div id="chart"><div id="question"><h1 class="unselectable"></h1></div></div>
 <!--SOO-->
 <div id="calendar-description">
     <h3>Your Predicted Death</h3>
@@ -390,7 +390,7 @@
         data = [
             {"label":"Heart Disease",  "value":heartDis.length},
             {"label":"Cancer",  "value":cancer.length},
-            {"label":"Respiratory Disease",  "value":respDis.length},
+            {"label":"Respiratory Dis.",  "value":respDis.length},
             {"label":"Accidents",  "value":accident.length},
             {"label":"Stroke",  "value":stroke.length},
             {"label":"Alzheimer's",  "value":alzheimer.length},
@@ -423,7 +423,7 @@
         // declare an arc generator function
         var arc = d3.svg.arc()
             .outerRadius(r)
-            .innerRadius(15); //TODO donut
+            .innerRadius(30); //TODO donut
 
         var pie = d3.layout.pie()
             .sort(null)
@@ -477,7 +477,11 @@
             .attr("text-anchor", "end")
             .attr("class","unselectable")
             .text( function(d, i) {
-                return data[i].label;
+                var totNum = heartDisSel.length+cancerSel.length+respDisSel.length+fluSel.length+diabetesSel.length+accidentSel.length+alzheimerSel.length+strokeSel.length;
+                //only have text if slice > 1%
+                if(data[i].value > (.01*totNum) ) {
+                    return data[i].label + ' ' + d3.round(100*data[i].value/totNum) + '%';
+                }
             })
             .style("font-size","9px");
 
@@ -609,7 +613,14 @@
                 d.outerRadius = r;
                 d.angle = (d.startAngle + d.endAngle)/2;
                 return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")translate(" + (d.outerRadius -10) +")";
-            })
+            });
+            arcText.text( function(d, i) {
+                var totNum = heartDisSel.length+cancerSel.length+respDisSel.length+fluSel.length+diabetesSel.length+accidentSel.length+alzheimerSel.length+strokeSel.length;
+                //only have text if slice > 1%
+                if(data[i].value > (.01*totNum) ) {
+                    return data[i].label + ' ' + d3.round(100*data[i].value/totNum) + '%';
+                }
+            });
             updateSliceArr();
 
             //populate question TODO
@@ -692,6 +703,7 @@
             dragInit(thisX, thisY);
         });
         container.on("touchmove", function(d) {
+            d3.event.preventDefault();
             var thisX = lastX - parseInt(d3.event.touches[0].clientX);
             var thisY = lastY - parseInt(d3.event.touches[0].clientY);
             dragCalc(thisX, thisY);
@@ -787,7 +799,7 @@
                 deathCauseData = heartDisSel;
             } else if(deathCause == 'Cancer'){
                 deathCauseData = cancerSel;
-            } else if(deathCause == 'Respiratory Disease'){
+            } else if(deathCause == 'Respiratory Dis.'){
                 deathCauseData = respDisSel;
             } else if(deathCause == 'Accidents'){
                 deathCauseData = accidentSel;
