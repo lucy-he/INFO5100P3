@@ -338,6 +338,7 @@
     var sliceArr;
     var arcPath;
 
+    //data arrays for holding the data for each death cause
     var heartDis = [];
     var cancer = [];
     var respDis = [];
@@ -347,6 +348,7 @@
     var diabetes = [];
     var flu = [];
 
+    //arrays for selected 
     var heartDisSel = heartDis;
     var cancerSel = cancer;
     var respDisSel = respDis;
@@ -442,7 +444,7 @@
         // declare an arc generator function
         var arc = d3.svg.arc()
             .outerRadius(r)
-            .innerRadius(30); //TODO donut
+            .innerRadius(30);
 
         var pie = d3.layout.pie()
             .sort(null)
@@ -521,7 +523,7 @@
         diabetesSel = diabetes;
         fluSel = flu;
 
-        //TODO: add attributes
+        //update wheel based on selected attributes
         change = function(age,sex,ethnicity,education) {
 
             heartDisSel = [];
@@ -642,7 +644,7 @@
             });
             updateSliceArr();
 
-            //populate question TODO
+            //populate question
             picked = Math.floor(((angleDeg%360)/360)*sliceArr.length);
             d3.select("#question h1")
                 .text(sliceArr[picked]);
@@ -697,9 +699,7 @@
                 
                 //spin image
                 container.attr("transform", "translate(" + (w / 2) + "," + (h / 2 + padding.top) + ") rotate(" + angleDeg + "," + 0 + "," + 0 + ")");
-                // console.log(angleDeg);
-
-                //populate question TODO
+                //populate question
                 picked = Math.floor(((angleDeg%360)/360)*sliceArr.length);
                 d3.select("#question h1")
                     .text(sliceArr[picked]);
@@ -710,7 +710,6 @@
         function dragEnd(){
             finishAngle = angleDeg%360;
             oldrotation = angleDeg%360;
-            // spin(); //TODO based on momentum
             isDown = false;
         }
 
@@ -751,7 +750,7 @@
             .attr("class", "spin-button")
             .attr("r", 30)
             .style({"fill":"white","cursor":"pointer"});
-        spinButt.on("click", spin); //TODO: FIX THE DRAG AFTER A SPIN
+        spinButt.on("click", spin);
 
         //spin text
         var spinText = svg.append("text")
@@ -770,7 +769,7 @@
                 .attrTween("transform", rotTween)
                 .each("end", function(){
                     oldrotation = angleDeg;
-                    //populate question TODO
+                    //populate question
                     picked = Math.floor((((angleDeg)%360)/360)*sliceArr.length);
                     d3.select("#question h1")
                         .text(sliceArr[picked]);
