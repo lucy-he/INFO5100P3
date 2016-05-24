@@ -68,6 +68,7 @@ var change;
 var sliceArr;
 var arcPath;
 
+//arrays to hold data for top 8 causes of death
 var heartDis = [];
 var cancer = [];
 var respDis = [];
@@ -77,6 +78,7 @@ var alzheimer = [];
 var diabetes = [];
 var flu = [];
 
+//arrays to hold filtered causes of death
 var heartDisSel = heartDis;
 var cancerSel = cancer;
 var respDisSel = respDis;
@@ -87,6 +89,7 @@ var diabetesSel = diabetes;
 var fluSel = flu;
 
 d3.csv("csv/DeathRecordsFinal.csv", function(deaths) {
+//load and parse data into arrays
 deaths.forEach(function(d) {
     if (d.Icd10Code[0] == "I" &&
         (parseInt(d.Icd10Code.slice(1, 3)) >= 1) &&
@@ -127,6 +130,7 @@ deaths.forEach(function(d) {
     }
 });
 
+//object to hold data for wheel slices
 data = [{
     "label": "Heart Disease",
     "value": heartDis.length
@@ -254,17 +258,10 @@ var arrow = svg.append("g")
         "fill": "black"
     });
 
-heartDisSel = heartDis;
-cancerSel = cancer;
-respDisSel = respDis;
-accidentSel = accident;
-strokeSel = stroke;
-alzheimerSel = alzheimer;
-diabetesSel = diabetes;
-fluSel = flu;
-
+//update wheel based on selected attributes
 change = function(age, sex, ethnicity, education) {
 
+    //clear filtered arrays
     heartDisSel = [];
     cancerSel = [];
     respDisSel = [];
@@ -283,6 +280,7 @@ change = function(age, sex, ethnicity, education) {
     data[6].value = 0;
     data[7].value = 0;
 
+    //refill arrays based on attributes
     heartDis.forEach(function(d) {
         if ((d.Sex == sex || sex == null) &&
             ((d.Age >= age[0] && d.Age <= age[1])) &&
@@ -364,6 +362,7 @@ change = function(age, sex, ethnicity, education) {
         }
     });
 
+    //update wheel, arc text based on new data
     arcs.data(pie(data));
     arcPath.data(pie(data));
     arcPath.transition().attrTween("d", arcTween);
@@ -388,6 +387,7 @@ change = function(age, sex, ethnicity, education) {
     d3.select("#question h1")
         .text(sliceArr[picked]);
 
+    //if no data, display warning message
     var totNum = heartDisSel.length + cancerSel.length + respDisSel.length + fluSel.length + diabetesSel.length + accidentSel.length + alzheimerSel.length + strokeSel.length;
     if (totNum == 0) {
         spinText.text('No Data Found');
@@ -400,7 +400,7 @@ change = function(age, sex, ethnicity, education) {
     updateCalendar(sliceArr[picked]);
 };
 
-
+//smooth transition of arc data changing
 function arcTween(a) {
     var i = d3.interpolate(this._current, a);
     this._current = i(0);
@@ -416,6 +416,7 @@ var curAngle = 0;
 var finishAngle = 0;
 var angleDeg = 0;
 
+//drag functions to calculate angles during mouse/touch
 function dragInit(x, y) {
     isDown = true;
     curAngle = Math.atan2(y, x);
@@ -453,6 +454,7 @@ function dragEnd() {
     isDown = false;
 }
 
+//map x,y of mouse clicks to functions
 container.on("mousedown", function(d) {
     var thisX = lastX - d3.event.x;
     var thisY = lastY - d3.event.y;
@@ -467,6 +469,7 @@ container.on("mouseup", function(d) {
     dragEnd();
 });
 
+//map x,y of screen touches to functions
 container.on("touchstart", function(d) {
     var thisX = lastX - parseInt(d3.event.touches[0].clientX);
     var thisY = lastY - parseInt(d3.event.touches[0].clientY);
@@ -509,6 +512,7 @@ var spinText = svg.append("text")
 
 var oldrotation = 0;
 
+//random spin function
 function spin(d) {
     angleDeg = Math.floor(Math.random() * 360) + 720;
 
@@ -525,6 +529,7 @@ function spin(d) {
     finishAngle = (angleDeg) % 360;
 }
 
+//smoothen random spinning 
 function rotTween(to) {
     var i = d3.interpolate(oldrotation % 360, (angleDeg));
     return function(t) {
