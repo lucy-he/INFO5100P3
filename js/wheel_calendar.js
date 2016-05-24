@@ -710,4 +710,5 @@ function updateCalendar(deathCause) {
         .style({
             "font-size": calScaleHeight
         });
-};
+    }
+});
