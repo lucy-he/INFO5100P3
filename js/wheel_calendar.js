@@ -182,7 +182,7 @@ var padding = {
 // declare an arc generator function
 var arc = d3.svg.arc()
     .outerRadius(r)
-    .innerRadius(30); //TODO donut
+    .innerRadius(30);
 
 var pie = d3.layout.pie()
     .sort(null)
@@ -383,7 +383,7 @@ change = function(age, sex, ethnicity, education) {
     });
     updateSliceArr();
 
-    //populate question TODO
+    //display cause of death
     picked = Math.floor(((angleDeg % 360) / 360) * sliceArr.length);
     d3.select("#question h1")
         .text(sliceArr[picked]);
@@ -437,9 +437,8 @@ function dragCalc(x, y) {
 
         //spin image
         container.attr("transform", "translate(" + (w / 2) + "," + (h / 2 + padding.top) + ") rotate(" + angleDeg + "," + 0 + "," + 0 + ")");
-        // console.log(angleDeg);
 
-        //populate question TODO
+        //display cause of death
         picked = Math.floor(((angleDeg % 360) / 360) * sliceArr.length);
         d3.select("#question h1")
             .text(sliceArr[picked]);
@@ -451,7 +450,6 @@ function dragCalc(x, y) {
 function dragEnd() {
     finishAngle = angleDeg % 360;
     oldrotation = angleDeg % 360;
-    // spin(); //TODO based on momentum
     isDown = false;
 }
 
@@ -495,7 +493,7 @@ var spinButt = container.append("circle")
         "fill": "white",
         "cursor": "pointer"
     });
-spinButt.on("click", spin); //TODO: FIX THE DRAG AFTER A SPIN
+spinButt.on("click", spin);
 
 //spin text
 var spinText = svg.append("text")
@@ -518,7 +516,7 @@ function spin(d) {
         .attrTween("transform", rotTween)
         .each("end", function() {
             oldrotation = angleDeg;
-            //populate question TODO
+            //display cause of death
             picked = Math.floor((((angleDeg) % 360) / 360) * sliceArr.length);
             d3.select("#question h1")
                 .text(sliceArr[picked]);
@@ -655,8 +653,6 @@ function updateCalendar(deathCause) {
             .style({
                 "font-size": calHeight * 0.08
             });
-
-        // console.log(calHeight,calPaddingVer,barHeight);
 
         svgCal.append("rect")
             .attr("height", barHeight)
