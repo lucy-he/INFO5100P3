@@ -238,7 +238,7 @@ arcText
         return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")translate(" + (d.outerRadius - 10) + ")";
     })
     .attr("text-anchor", "end")
-    .attr("class", "unselectable")
+    .attr("class", "unselectable glow")
     .text(function(d, i) {
         var totNum = heartDisSel.length + cancerSel.length + respDisSel.length + fluSel.length + diabetesSel.length + accidentSel.length + alzheimerSel.length + strokeSel.length;
         //only have text if slice > 1%
@@ -246,7 +246,7 @@ arcText
             return data[i].label + ' ' + d3.round(100 * data[i].value / totNum) + '%';
         }
     })
-    .style("font-size", "9px");
+    .style("font-size", "9px").style("fill","black").style("stroke","black").style("stroke-width",".5px");
 
 
 //make arrow
