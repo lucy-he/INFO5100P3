@@ -25,6 +25,7 @@ selected items*/
        */
   -ms-user-select: none;
   user-select: none;
+  pointer-events: none;
 }
 
 #chart {
