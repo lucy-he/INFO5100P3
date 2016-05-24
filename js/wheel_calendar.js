@@ -47,7 +47,7 @@ $('#education li a').on('click', function() {
         education = 1;
     } else if ($(this).text() == "9th-12th Grade (No Diploma)") {
         education = 2;
-    } else if ($(this).text() == "High School Graduate or FED Completed") {
+    } else if ($(this).text() == "High School Graduate or GED Completed") {
         education = 3;
     } else if ($(this).text() == "Some College Credit, No Degree") {
         education = 4;
