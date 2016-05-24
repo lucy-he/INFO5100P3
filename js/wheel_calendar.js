@@ -669,6 +669,7 @@ function updateCalendar(deathCause) {
 
     var svgCalScale = d3.select('#calendar-scale')
         .attr("width", calWidth)
+        .attr("height",50)
         .style({
             "margin-top": calScaleHeight
         })
